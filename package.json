@@ -1,0 +1,19 @@
+{
+  "name": "macro-tracker",
+  "version": "1.0.0",
+  "description": "Electron app that tracks macronutrients",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/leejustin01/macro-tracker"
+  },
+  "author": "Justin Lee",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^34.0.1"
+  }
+}
