@@ -4,9 +4,10 @@
   "description": "Electron app that tracks macronutrients",
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "npm run build && npm run electron",
     "dev": "vite",
-    "build": "vite build --emptyOutDir"
+    "build": "vite build --emptyOutDir",
+    "electron": "electron ."
   },
   "repository": {
     "type": "git",
@@ -26,6 +27,7 @@
   "dependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-icons": "^5.4.0",
     "react-router-dom": "^7.1.3"
   }
 }
