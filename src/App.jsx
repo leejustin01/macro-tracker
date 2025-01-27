@@ -9,7 +9,12 @@ function App() {
 
   const loadFoods = _id => {
     const foodsJSON = window.api.readFoods();
-    const foodsArray = JSON.parse(foodsJSON);
+    let foodsArray;
+    if (foods.length > 0) {
+      foodsArray = JSON.parse(foodsJSON);
+    } else {
+      foodsArray = [];
+    }
     setFoods(foodsArray);
   };
   
@@ -25,7 +30,6 @@ function App() {
   const onDelete = _id => {
     const newFoods = foods.filter(food => food._id != _id);
     setFoods(newFoods);
-    
   };
 
   const onAdd = () => {
@@ -39,6 +43,9 @@ function App() {
 
   useEffect(() => {
     updateTcal();
+    const foodsJSON = JSON.stringify(foods);
+    console.log(foodsJSON);
+    window.api.writeFoods(JSON.stringify(foods));
   }, [foods]);
 
   return (
