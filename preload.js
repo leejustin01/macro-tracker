@@ -10,20 +10,7 @@ contextBridge.exposeInMainWorld('versions', {
     ping: () => ipcRenderer.invoke('ping')
 })
 
-contextBridge.exposeInMainWorld('api', {
-  readFoods: () => {
-    const filePath = path.join(process.cwd(), 'src', 'data', 'foods.json');
-    if (fs.existsSync(filePath)) {
-      return fs.readFileSync(filePath, 'utf-8');
-    } else {
-      return '';
-    }
-  },
-
-  writeFoods: foodsJSON => {
-    const filePath = path.join(process.cwd(), 'src', 'data', 'foods.json');
-    if (fs.existsSync(filePath)) {
-      fs.writeFileSync(filePath, foodsJSON, 'utf-8');
-    }
-  }
+contextBridge.exposeInMainWorld('food', {
+  get: () => ipcRenderer.invoke('get'),
+  put: foodsJSON => ipcRenderer.invoke('put', foodsJSON)
 });

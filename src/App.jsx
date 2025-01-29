@@ -7,15 +7,14 @@ function App() {
   const [tcal, setTcal] = useState([]);
   const [foods, setFoods] = useState([]); 
 
-  const loadFoods = _id => {
-    const foodsJSON = window.api.readFoods();
-    let foodsArray;
-    if (foods.length > 0) {
-      foodsArray = JSON.parse(foodsJSON);
-    } else {
-      foodsArray = [];
+  const loadFoods = async () => {
+    try {
+      const foodsJSON = await window.food.get();
+      const foodsArray = JSON.parse(foodsJSON);
+      setFoods(Array.isArray(foodsArray) ? foodsArray : []);
+    } catch (e) {
+      console.log("Error loading foods:", e);
     }
-    setFoods(foodsArray);
   };
   
   const updateTcal = () => {
@@ -43,9 +42,16 @@ function App() {
 
   useEffect(() => {
     updateTcal();
-    const foodsJSON = JSON.stringify(foods);
-    console.log(foodsJSON);
-    window.api.writeFoods(JSON.stringify(foods));
+    const saveFoods = async () => {
+      try {
+        const foodsJSON = JSON.stringify(foods);
+        console.log("Saving:", foodsJSON);
+        await window.food.put(foodsJSON);
+    } catch (error) {
+        console.error("Error saving foods:", error);
+    }
+    };
+    saveFoods();
   }, [foods]);
 
   return (
