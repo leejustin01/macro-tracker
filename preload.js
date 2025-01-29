@@ -11,6 +11,11 @@ contextBridge.exposeInMainWorld('versions', {
 })
 
 contextBridge.exposeInMainWorld('food', {
-  get: () => ipcRenderer.invoke('get'),
-  put: foodsJSON => ipcRenderer.invoke('put', foodsJSON)
+  get: () => ipcRenderer.invoke('getFood'),
+  put: foodsJSON => ipcRenderer.invoke('putFood', foodsJSON)
+});
+
+contextBridge.exposeInMainWorld('goal', {
+  get: () => ipcRenderer.invoke('getGoals'),
+  put: goalsJSON => ipcRenderer.invoke('putGoals', goalsJSON)
 });

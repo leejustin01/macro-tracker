@@ -17,7 +17,7 @@ function FoodTable({ foods, onDelete, onAdd }) {
         <tbody>
             {foods.map((food, i) => <Food food={food} onDelete={onDelete} key={i} />)}
             <tr>
-                <FaPlus onClick={ () => onAdd() }/>
+                <FaPlus id="addButton" onClick={ () => onAdd() }/>
             </tr>
         </tbody>
     </table>
