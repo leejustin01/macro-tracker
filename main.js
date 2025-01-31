@@ -2,20 +2,20 @@ const { app, BrowserWindow, ipcMain } = require('electron/main')
 const path = require('node:path')
 const fs = require('node:fs');
 
-const createWindow = () => {
+const createWindow = page => {
     const win = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 1920,
+        height: 1080,
+        icon: __dirname + '/foodscale.png',
         webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             nodeIntegration: true
         }
     });
 
-    const indexPath = path.resolve(__dirname, 'dist', 'index.html');
-    console.log('Loading index.html from:', indexPath);
+    win.setIcon(path.resolve(__dirname, 'public', 'foodscale.png'));
 
-    win.loadFile(indexPath).then(() => {
+    win.loadFile(page).then(() => {
         console.log('Successfully loaded index.html');
     }).catch((err) => {
         console.error("Error loading index.html:", err);
@@ -59,8 +59,6 @@ const writeGoals = (goalsJSON, backup) => {
 };
 
 app.whenReady().then(() => {
-    // receive 'ping' from renderer, reply with 'pong'
-    ipcMain.handle('ping', () => 'pong')
     ipcMain.handle('getFood', () => readFoods());
     ipcMain.handle('putFood', async (event, foodsJSON) => {
         try {
@@ -86,7 +84,7 @@ app.whenReady().then(() => {
         }
     });
 
-    createWindow();
+    createWindow(path.resolve(__dirname, 'dist', 'index.html'));
 
     // for macOS
     app.on('activate', () => {

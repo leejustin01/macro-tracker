@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Goal from './components/Goal';
 import FoodTable from './components/FoodTable';
+import AddFood from './components/AddFood';
 
 function App() {
   const [foods, setFoods] = useState([]); 
@@ -54,9 +55,20 @@ function App() {
     setFoods(newFoods);
   };
 
-  const onAdd = () => {
-    console.log("ADD BUTTON PRESSED");
-    
+  const onAdd = ({ foodName, calories, protein, fat, carbs }) => {
+    const ids = foods.map(food => food._id);
+    var _id;
+    for (var i = 0; i <= ids.length; i++) {
+      if (!ids.includes(i)) {
+        _id = i;
+        break;
+      }
+    }
+
+    const newFood = { _id, foodName, calories, protein, fat, carbs };
+    let temp = foods;
+    temp.push(newFood);
+    setFoods(temp);
   };
 
   useEffect(() => {
@@ -82,6 +94,7 @@ function App() {
     <div>
       <Goal cal={goals[0]} tcal={tcal} protein={goals[1]} tprotein={tprotein} fat={goals[2]} tfat={tfat} carbs={goals[3]} tcarbs={tcarbs}></Goal>
       <FoodTable foods={foods} onDelete={onDelete} onAdd={onAdd}></FoodTable>
+      <AddFood onAdd={() => onAdd()}></AddFood>
       <footer>© 2024 Justin Lee</footer>
     </div>
   );

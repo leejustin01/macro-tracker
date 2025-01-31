@@ -1,7 +1,4 @@
 const { contextBridge, ipcRenderer } = require('electron')
-const fs = require('fs');
-const path = require('node:path');
-const { data } = require('react-router-dom');
 
 contextBridge.exposeInMainWorld('versions', {
     node: () => process.versions.node,
@@ -12,7 +9,7 @@ contextBridge.exposeInMainWorld('versions', {
 
 contextBridge.exposeInMainWorld('food', {
   get: () => ipcRenderer.invoke('getFood'),
-  put: foodsJSON => ipcRenderer.invoke('putFood', foodsJSON)
+  put: foodsJSON => ipcRenderer.invoke('putFood', foodsJSON),
 });
 
 contextBridge.exposeInMainWorld('goal', {
